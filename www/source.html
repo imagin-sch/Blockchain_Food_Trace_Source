@@ -1,0 +1,70 @@
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<title>区块链食品溯源系统</title>
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./web3/dist/web3.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">             
+				<div class="navbar-brand">区块链食品溯源系统</div>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="./trace_source.html">食品溯源</a></li>
+					<li class="active"><a href="./source.html">问题追踪</a></li>
+					<li><a href="./query.html">查询区块</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li style="margin-right: 150"><a href="./showkind.html">食品类别查询</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+	<div class="container" style="margin-top: 100">
+		<h1>问题追踪</h1>
+		<h2 id="info"></h2>
+		<input id="name" type="text" class="form-control" style="width: 600;margin-top: 80" placeholder="食品编号">
+		<button id="button" type="submit" class ="btn btn btn-danger" style="margin-top: 20">查询</button>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+	<script>
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} 
+		else {
+			web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+		}
+		web3.eth.defaultAccount = web3.eth.accounts[0];
+		var abi = [{"constant": false,"inputs": [],"name": "initGoods","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xcdc1514f"},{"constant": true,"inputs": [],"name": "good","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "view","type": "function","signature": "0xaa8fb40b"},{"constant": false,"inputs": [],"name": "initaddr","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xed64c6c9"},{"constant": true,"inputs": [],"name": "addrindex","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "view","type": "function","signature": "0xccc679f7"},{"constant": true,"inputs": [{  "name": "id",  "type": "uint256"}],"name": "addrvalue","outputs": [{  "name": "",  "type": "address"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x7c383613"},{"constant": true,"inputs": [{  "name": "_string",  "type": "string"}],"name": "goodcheck","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "view","type": "function","signature": "0xbc1e22c6"},{"constant": true,"inputs": [{  "name": "_string",  "type": "string"},{  "name": "_id",  "type": "uint256"}],"name": "checkgood","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x829c9feb"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"},{  "name": "_place",  "type": "string"}],"name": "initmarket","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x45bf9bb0"},{"constant": true,"inputs": [],"name": "showcount","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x296b292e"},{"constant": true,"inputs": [{  "name": "_address",  "type": "address"},{  "name": "name",  "type": "string"}],"name": "showtime","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x046cba0f"},{"constant": true,"inputs": [{  "name": "_address",  "type": "address"},{  "name": "_to",  "type": "address"},{  "name": "_goodname",  "type": "string"}],"name": "showtran","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x9a01d19b"},{"constant": true,"inputs": [{  "name": "_address",  "type": "address"},{  "name": "_goodindex",  "type": "uint256"},{  "name": "_goodname",  "type": "string"}],"name": "showamount","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "view","type": "function","signature": "0xc1b410bd"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"}],"name": "initgoodkind1","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x18ce5f8a"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"}],"name": "initgoodkind2","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x12572f2a"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"}],"name": "initgoodkind3","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x91a828df"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"}],"name": "initgoodkind4","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x6459bf04"},{"constant": false,"inputs": [{  "name": "_role",  "type": "uint256"},{  "name": "_address",  "type": "address"},{  "name": "_place",  "type": "string"}],"name": "NewNode","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xb869f534"},{"constant": false,"inputs": [{  "name": "_from",  "type": "address"},{  "name": "_to",  "type": "address"},{  "name": "_GoodIndex",  "type": "uint256"},{  "name": "_GoodName",  "type": "string"},{  "name": "_account",  "type": "uint256"},{  "name": "_GoodKind",  "type": "uint256"}],"name": "transport","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xd137d38a"},{"constant": false,"inputs": [{  "name": "_address",  "type": "address"},{  "name": "_GoodIndex",  "type": "uint256"},{  "name": "_GoodName",  "type": "string"},{  "name": "_product",  "type": "uint256"},{  "name": "_good",  "type": "uint256"},{  "name": "_GoodId",  "type": "uint256"}],"name": "product","outputs": [{  "name": "",  "type": "uint256"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x0e8383dc"},{"constant": true,"inputs": [{  "name": "_GoodName",  "type": "string"},{  "name": "_GoodId",  "type": "uint256"}],"name": "trace_source","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x672ac300"},{"constant": true,"inputs": [{  "name": "_GoodName",  "type": "string"}],"name": "source","outputs": [{  "name": "",  "type": "string"}],"payable": false,"stateMutability": "view","type": "function","signature": "0x3f61716c"},{"constant": true,"inputs": [{  "name": "sig",  "type": "bytes"}],"name": "splitSignature","outputs": [{  "name": "v",  "type": "uint8"},{  "name": "r",  "type": "bytes32"},{  "name": "s",  "type": "bytes32"}],"payable": false,"stateMutability": "pure","type": "function","signature": "0xa7bb5803"},{"constant": true,"inputs": [{  "name": "message",  "type": "bytes32"},{  "name": "sig",  "type": "bytes"}],"name": "recoverSigner","outputs": [{  "name": "",  "type": "address"}],"payable": false,"stateMutability": "pure","type": "function","signature": "0x97aba7f9"},{"constant": false,"inputs": [{  "name": "_address1",  "type": "address"},{  "name": "_address2",  "type": "address"},{  "name": "_address3",  "type": "address"},{  "name": "_address4",  "type": "address"},{  "name": "_address5",  "type": "address"}],"name": "tiaoshi","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x758113ef"},{"constant": false,"inputs": [],"name": "decode","outputs": [{  "name": "",  "type": "address"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xc0f8940c"},{"constant": false,"inputs": [{  "name": "data",  "type": "bytes"},{  "name": "start",  "type": "uint256"},{  "name": "len",  "type": "uint256"}],"name": "slice","outputs": [{  "name": "",  "type": "bytes"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xe0041396"},{"constant": false,"inputs": [{  "name": "r",  "type": "bytes32"},{  "name": "s",  "type": "bytes32"},{  "name": "v1",  "type": "bytes1"}],"name": "ecrecoverDecode","outputs": [{  "name": "addr",  "type": "address"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0x9f9d5793"},{"constant": false,"inputs": [{  "name": "source",  "type": "bytes"}],"name": "bytesToBytes32","outputs": [{  "name": "result",  "type": "bytes32"}],"payable": false,"stateMutability": "nonpayable","type": "function","signature": "0xbfe370d9"}];
+		var c = web3.eth.contract(abi);
+		var s = c.at("0x776a55EE97e2fbDb60D0C5fb9aBF99278C011bFE");
+		var result = "";
+		$("#button").click(function() {
+			result = s.source($('#name').val());
+			if(result){
+				var res = result.split(" ");
+				var temp = "<table class=\"table table-striped\" style=\"width: 40%;margin-top:100;text-align: center;\"><tr><th style=\"text-align:left;\">商品名称</th></tr>";
+				for(var i = 0; i < res.length; i++){
+					temp += "<tr><td style=\"text-align:left\">" + res[i] + "</td></tr>";
+				}
+				temp += "</table>";
+				$("#info").html(temp);
+
+			}
+			else
+				$("#info").html("未查到此商品");
+		});
+
+	</script>
+
+</body>
+</html>
